@@ -98,8 +98,8 @@ def callback_max_alarm(context: CallbackContext):
 if __name__ == '__main__':
     # argument configuration
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', type=str, default='MC', help='user id')
-    parser.add_argument('-t', type=str, default='MC', help='token')
+    parser.add_argument('-i', type=str, required=True, help='user id')
+    parser.add_argument('-t', type=str, required=True, help='token')
     args = parser.parse_args()
 
     id = args.i
