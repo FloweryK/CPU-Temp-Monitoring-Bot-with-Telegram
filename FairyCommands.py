@@ -1,8 +1,6 @@
 # encoding: utf-8
-from funcs import *
+from funcs import load, path_list
 import ChatBotModel
-
-import argparse
 import matplotlib.pyplot as plt
 from telegram.ext import CallbackContext
 
@@ -21,9 +19,7 @@ def get_temperatures(delay=1):
         'now': now_temp,
         'max': max_temp,
         'min': min_temp,
-        'avg': avg_temp
-    })
-
+        'avg': avg_temp})
     df = df.iloc[:-2]
 
     return df
@@ -49,18 +45,15 @@ def draw_temperatures(bot, update):
 
     timestamp = history['timestamp'] + 9 * 60 * 60
     date = pd.to_datetime(timestamp, unit='s')
-
     temp = history.iloc[:, 4:-1]
 
     plt.plot(date, temp.min(axis=1), label='min temp')
     plt.plot(date, temp.max(axis=1), label='max temp')
     plt.plot(date, temp.mean(axis=1), label='avg temp')
-
     plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
     plt.xticks(rotation=45)
     plt.xlabel('month-day hour')
     plt.ylabel('temperature (C)')
-
     plt.savefig('draw_temperature.png', bbox_inches='tight')
     plt.close()
 
@@ -96,14 +89,10 @@ def callback_max_alarm(context: CallbackContext):
 
 
 if __name__ == '__main__':
-    # argument configuration
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-i', type=str, required=True, help='user id')
-    parser.add_argument('-t', type=str, required=True, help='token')
-    args = parser.parse_args()
-
-    id = args.i
-    token = args.t
+    print('user id:')
+    id = str(input())
+    print('bot token:')
+    token = str(input())
 
     # define fairy
     fairy = ChatBotModel.Fairy(token=token, id=id)
