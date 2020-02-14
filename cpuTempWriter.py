@@ -1,4 +1,4 @@
-from funcs import *
+from funcs import save, load, mkdir
 import re
 import subprocess
 import pandas as pd
